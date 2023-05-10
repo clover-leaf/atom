@@ -14,10 +14,16 @@ class BrokerEditBloc extends Bloc<BrokerEditEvent, BrokerEditState> {
     required bool isEdit,
     required Broker? initialBroker,
   }) : super(BrokerEditState(
-            isAdmin: isAdmin,
-            domain: domain,
-            isEdit: isEdit,
-            initialBroker: initialBroker)) {
+          isAdmin: isAdmin,
+          domain: domain,
+          isEdit: isEdit,
+          name: initialBroker?.name ?? '',
+          url: initialBroker?.url ?? '',
+          port: initialBroker != null ? initialBroker.port.toString() : '',
+          account: initialBroker?.account,
+          password: initialBroker?.password,
+          initialBroker: initialBroker,
+        )) {
     on<Submitted>(_onSubmitted);
     on<NameChanged>(_onNameChanged);
     on<UrlChanged>(_onUrlChanged);

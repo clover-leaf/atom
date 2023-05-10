@@ -103,6 +103,7 @@ class UserRepository {
         port: port,
         account: account,
         password: password,
+        id: id,
       );
 
   Stream<dynamic> group(String domain) => _databaseClient.group(domain);

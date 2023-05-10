@@ -20,11 +20,13 @@ class BrokerEditPage extends StatelessWidget {
   }) =>
       PageRouteBuilder<void>(
         pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
-          create: (context) => BrokerEditBloc(context.read<UserRepository>(),
-              domain: domain,
-              isAdmin: isAdmin,
-              initialBroker: initialBroker,
-              isEdit: isEdit),
+          create: (context) => BrokerEditBloc(
+            context.read<UserRepository>(),
+            domain: domain,
+            isAdmin: isAdmin,
+            initialBroker: initialBroker,
+            isEdit: isEdit,
+          ),
           child: BrokerEditPage(initialBroker: initialBroker),
         ),
       );

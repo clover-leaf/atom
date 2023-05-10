@@ -107,9 +107,8 @@ class DatabaseClient {
     try {
       final domainClient = await getSupabaseClient(domain);
       if (id != null) {
-        await domainClient
-            .from('member')
-            .update({'id': id, 'username': username, 'password': password});
+        await domainClient.from('member').update(
+            {'username': username, 'password': password}).match({'id': id});
       } else {
         await domainClient.from('member').insert(
             {'username': username, 'password': password, 'is_admin': false});
@@ -151,13 +150,12 @@ class DatabaseClient {
       final domainClient = await getSupabaseClient(domain);
       if (id != null) {
         await domainClient.from('broker').update({
-          'id': id,
           'name': name,
           'url': url,
           'port': port,
           'account': account,
           'password': password,
-        });
+        }).match({'id': id});
       } else {
         await domainClient.from('broker').insert({
           'name': name,

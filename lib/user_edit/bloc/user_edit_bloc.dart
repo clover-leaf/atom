@@ -17,6 +17,8 @@ class UserEditBloc extends Bloc<UserEditEvent, UserEditState> {
             isAdmin: isAdmin,
             domain: domain,
             isEdit: isEdit,
+            username: initialUser?.username ?? '',
+            password: initialUser?.password ?? '',
             initialUser: initialUser)) {
     on<Submitted>(_onSubmitted);
     on<UsernameChanged>(_onUsernameChanged);
