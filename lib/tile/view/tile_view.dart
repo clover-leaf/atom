@@ -1,3 +1,4 @@
+import 'package:atom/dashboard_edit/dashboard_edit.dart';
 import 'package:atom/gen/colors.gen.dart';
 import 'package:atom/tile/tile.dart';
 import 'package:atom/tile_choose/tile_choose_page.dart';
@@ -108,22 +109,44 @@ class _Header extends StatelessWidget {
             ),
           ),
           _Title(dashboardName),
-          if (isAdmin && selectedDashboardId != '')
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
+          Expanded(
+              child: Row(
+            children: [
+              if (isAdmin)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.add_a_photo,
+                      color: Colors.white,
+                    ),
+                    onPressed: () =>
+                        Navigator.of(context).push(DashboardEditPage.route(
+                      domain: domain,
+                      isAdmin: isAdmin,
+                      initialDashboard: null,
+                      isEdit: true,
+                    )),
+                  ),
                 ),
-                onPressed: () =>
-                    Navigator.of(context).push(TileChoosePage.route(
-                  domain: domain,
-                  isAdmin: isAdmin,
-                  dashboardId: selectedDashboardId,
-                )),
-              ),
-            ),
+              if (isAdmin && selectedDashboardId != '')
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    onPressed: () =>
+                        Navigator.of(context).push(TileChoosePage.route(
+                      domain: domain,
+                      isAdmin: isAdmin,
+                      dashboardId: selectedDashboardId,
+                    )),
+                  ),
+                ),
+            ],
+          ))
         ],
       ),
     );
