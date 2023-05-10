@@ -95,7 +95,6 @@ class _Header extends StatelessWidget {
       height: 72,
       color: ColorName.XRed,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
@@ -108,9 +107,12 @@ class _Header extends StatelessWidget {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
+          const Spacer(),
           _Title(dashboardName),
+          const Spacer(),
           Expanded(
               child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               if (isAdmin)
                 Padding(
