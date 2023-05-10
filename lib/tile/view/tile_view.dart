@@ -22,6 +22,8 @@ class TileView extends StatelessWidget {
     final brokerStatusView = state.brokerStatusView;
 
     final isAdmin = state.isAdmin;
+    final domain = state.domain;
+    final selectedDashboardId = state.selectedDashboardId;
 
     // tile width
     final mediaWidth = MediaQuery.of(context).size.width;
@@ -68,6 +70,8 @@ class TileView extends StatelessWidget {
                         value: tileValueView[tile.id],
                         status: brokerStatusView[device?.brokerID],
                         isAdmin: isAdmin,
+                        domain: domain,
+                        dashboardId: selectedDashboardId,
                       );
                     },
                   ).toList()),

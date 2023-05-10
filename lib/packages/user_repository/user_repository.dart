@@ -202,4 +202,10 @@ class UserRepository {
         lob: lob,
         id: id,
       );
+
+  Future<void> deleteTile({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteTile(domain: domain, id: id);
 }

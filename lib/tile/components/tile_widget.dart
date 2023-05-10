@@ -1,8 +1,10 @@
 import 'package:atom/gen/colors.gen.dart';
 import 'package:atom/packages/models/models.dart';
 import 'package:atom/packages/models/tile_type.dart';
-import 'package:atom/tile/components/components.dart';
+import 'package:atom/tile/tile.dart';
+import 'package:atom/tile_edit/view/tile_edit_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TileWidget extends StatelessWidget {
   const TileWidget({
@@ -11,9 +13,13 @@ class TileWidget extends StatelessWidget {
     required this.value,
     required this.status,
     required this.isAdmin,
+    required this.domain,
+    required this.dashboardId,
     super.key,
   });
 
+  final String domain;
+  final String dashboardId;
   final Tile tile;
   final double width;
   final String? value;
@@ -44,6 +50,7 @@ class TileWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     tile.name.toUpperCase(),
@@ -52,6 +59,30 @@ class TileWidget extends StatelessWidget {
                       color: ColorName.XBlack,
                     ),
                   ),
+                  IconButton(
+                    icon: const Icon(Icons.more_horiz),
+                    onPressed: () => showDialog<bool?>(
+                      context: context,
+                      builder: (bContext) => const TOptionDialog(),
+                    ).then((value) {
+                      if (value != null) {
+                        if (value) {
+                          context
+                              .read<TileBloc>()
+                              .add(DeleteTile(tileId: tile.id));
+                        } else {
+                          Navigator.of(context).push(TileEditPage.route(
+                            domain: domain,
+                            initialTile: tile,
+                            dashboardId: dashboardId,
+                            type: tile.type,
+                            isAdmin: isAdmin,
+                            isEdit: true,
+                          ));
+                        }
+                      }
+                    }),
+                  )
                 ],
               ),
               if (status != null && status!.isConnecting)

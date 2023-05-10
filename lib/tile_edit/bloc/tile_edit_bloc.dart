@@ -24,8 +24,10 @@ class TileEditBloc extends Bloc<TileEditEvent, TileEditState> {
           dashboardId: dashboardId,
           type: type,
           isEdit: isEdit,
+          name: initialTile?.name ?? '',
+          deviceId: initialTile?.deviceId ?? '',
+          lob: initialTile?.lob ?? type.initialLob,
           initialTile: initialTile,
-          lob: type.initialLob,
         )) {
     on<GetDevices>(_onGetDevices);
     on<Submitted>(_onSubmitted);

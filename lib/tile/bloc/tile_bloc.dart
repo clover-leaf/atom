@@ -46,6 +46,7 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     on<BrokerTopicPayloadsChanged>(_onBrokerTopicPayloadsChanged);
     on<TileValueViewChanged>(_onTileValueViewChanged);
     on<DeleteDashboard>(_onDeleteDashboard);
+    on<DeleteTile>(_onDeleteTile);
   }
 
   final UserRepository _userRepository;
@@ -61,6 +62,10 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     if (state.dashboards.isNotEmpty) {
       add(DashboardIdChanged(dashboardId: state.dashboards.first.id));
     }
+  }
+
+  Future<void> _onDeleteTile(DeleteTile event, Emitter<TileState> emit) async {
+    await _userRepository.deleteTile(domain: state.domain, id: event.tileId);
   }
 
   void handleBrokerChange(List<Broker> brokers, TileState state) {

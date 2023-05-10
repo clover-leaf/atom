@@ -143,3 +143,12 @@ class DeleteDashboard extends TileEvent {
   @override
   List<Object> get props => [dashboardId];
 }
+
+class DeleteTile extends TileEvent {
+  const DeleteTile({required this.tileId});
+
+  final String tileId;
+
+  @override
+  List<Object> get props => [tileId];
+}

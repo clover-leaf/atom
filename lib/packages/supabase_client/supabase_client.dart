@@ -380,4 +380,17 @@ class DatabaseClient {
       throw Exception('Something has been wrong!');
     }
   }
+
+  Future<void> deleteTile({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('tile').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
 }
