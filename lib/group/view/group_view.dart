@@ -135,7 +135,9 @@ class GroupList extends StatelessWidget {
                   isAdmin: isAdmin,
                   group: Group.fromJson(item),
                 )),
-                onDeletePressed: () {},
+                isAdmin: isAdmin,
+                onDeletePressed: () =>
+                    context.read<GroupBloc>().add(DeleteGroup(item['id'])),
               );
             });
         // Return your widget with the data from the snapshot
@@ -188,7 +190,9 @@ class DeviceList extends StatelessWidget {
                   // subtitle: item['password'],
                   subtitle: '',
                   iconData: Icons.sensors,
-                  onDeletePressed: () {},
+                  isAdmin: isAdmin,
+                  onDeletePressed: () =>
+                      context.read<GroupBloc>().add(DeleteDevice(item['id'])),
                   onPressed: () =>
                       Navigator.of(context).push(DeviceEditPage.route(
                         domain: domain,

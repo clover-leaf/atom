@@ -86,10 +86,13 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final domain = context.select((TileBloc bloc) => bloc.state.domain);
     final isAdmin = context.select((TileBloc bloc) => bloc.state.isAdmin);
     final selectedDashboardId =
         context.select((TileBloc bloc) => bloc.state.selectedDashboardId);
+    final selectedDashboard =
+        context.select((TileBloc bloc) => bloc.state.selectedDashboard);
 
     return Container(
       height: 72,
@@ -98,7 +101,7 @@ class _Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: IconButton(
               icon: const Icon(
                 Icons.menu,
@@ -107,13 +110,38 @@ class _Header extends StatelessWidget {
               onPressed: () => Scaffold.of(context).openDrawer(),
             ),
           ),
-          const Spacer(),
-          _Title(dashboardName),
-          const Spacer(),
+          Text(
+            dashboardName,
+            style:
+                textTheme.headlineSmall!.copyWith(color: ColorName.darkWhite),
+          ),
           Expanded(
               child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              if (isAdmin && selectedDashboardId != '')
+                IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => Navigator.of(context).push(
+                      DashboardEditPage.route(
+                          domain: domain,
+                          isAdmin: isAdmin,
+                          initialDashboard: selectedDashboard,
+                          isEdit: true)),
+                ),
+              if (isAdmin && selectedDashboardId != '')
+                IconButton(
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                  onPressed: () => context
+                      .read<TileBloc>()
+                      .add(DeleteDashboard(dashboardId: selectedDashboardId)),
+                ),
               if (isAdmin)
                 Padding(
                   padding: const EdgeInsets.only(right: 8.0),
@@ -151,28 +179,6 @@ class _Header extends StatelessWidget {
           ))
         ],
       ),
-    );
-  }
-}
-
-class _Title extends StatelessWidget {
-  const _Title(this.dashboardName);
-
-  final String dashboardName;
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          dashboardName,
-          style: textTheme.headlineSmall!.copyWith(color: ColorName.darkWhite),
-        ),
-      ],
     );
   }
 }

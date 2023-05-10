@@ -68,6 +68,7 @@ class TileChoosePage extends StatelessWidget {
                 type: type,
                 isEdit: true,
               )),
+              isAdmin: false,
               onDeletePressed: () {},
             );
           },

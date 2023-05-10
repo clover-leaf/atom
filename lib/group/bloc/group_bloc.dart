@@ -15,6 +15,8 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
   }) : super(GroupState(domain: domain, isAdmin: isAdmin, group: group)) {
     on<TabChanged>(_onTabChanged);
     on<GroupChanged>(_onGroupChanged);
+    on<DeleteGroup>(_onDeleteGroup);
+    on<DeleteDevice>(_onDeleteDevice);
   }
 
   final UserRepository _userRepository;
@@ -29,5 +31,16 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
 
   void _onGroupChanged(GroupChanged event, Emitter<GroupState> emit) {
     emit(state.copyWith(group: event.group));
+  }
+
+  Future<void> _onDeleteGroup(
+      DeleteGroup event, Emitter<GroupState> emit) async {
+    await _userRepository.deleteBroker(domain: state.domain, id: event.groupId);
+  }
+
+  Future<void> _onDeleteDevice(
+      DeleteDevice event, Emitter<GroupState> emit) async {
+    await _userRepository.deleteDevice(
+        domain: state.domain, id: event.deviceId);
   }
 }

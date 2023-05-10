@@ -66,6 +66,16 @@ class TileState extends Equatable {
     return '';
   }
 
+  Dashboard? get selectedDashboard {
+    final m = dashboards
+        .where((element) => element.id == selectedDashboardId)
+        .toList();
+    if (m.isNotEmpty) {
+      return m.first;
+    }
+    return null;
+  }
+
   late final Map<FieldId, Broker> brokerView = {
     for (final br in brokers) br.id: br
   };

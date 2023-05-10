@@ -45,6 +45,7 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     on<GatewayClientViewChanged>(_onGatewayClientViewChanged);
     on<BrokerTopicPayloadsChanged>(_onBrokerTopicPayloadsChanged);
     on<TileValueViewChanged>(_onTileValueViewChanged);
+    on<DeleteDashboard>(_onDeleteDashboard);
   }
 
   final UserRepository _userRepository;
@@ -52,6 +53,15 @@ class TileBloc extends Bloc<TileEvent, TileState> {
   StreamSubscription<dynamic>? _tileSubsription;
   StreamSubscription<dynamic>? _deviceSubsription;
   StreamSubscription<dynamic>? _brokerSubsription;
+
+  Future<void> _onDeleteDashboard(
+      DeleteDashboard event, Emitter<TileState> emit) async {
+    await _userRepository.deleteDashboard(
+        domain: state.domain, id: event.dashboardId);
+    if (state.dashboards.isNotEmpty) {
+      add(DashboardIdChanged(dashboardId: state.dashboards.first.id));
+    }
+  }
 
   void handleBrokerChange(List<Broker> brokers, TileState state) {
     final brokerView = {for (final br in brokers) br.id: br};

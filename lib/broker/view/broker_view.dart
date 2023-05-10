@@ -40,7 +40,9 @@ class BrokerView extends StatelessWidget {
                         isAdmin: isAdmin,
                         initialBroker: Broker.fromJson(item),
                         isEdit: false)),
-                onDeletePressed: () {},
+                isAdmin: isAdmin,
+                onDeletePressed: () =>
+                    context.read<BrokerBloc>().add(DeleteBroker(item['id'])),
               );
             });
         // Return your widget with the data from the snapshot

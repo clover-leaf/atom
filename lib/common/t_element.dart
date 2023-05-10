@@ -9,6 +9,7 @@ class TElement extends StatelessWidget {
     required this.onPressed,
     required this.onDeletePressed,
     required this.iconData,
+    required this.isAdmin,
   });
 
   final String title;
@@ -16,6 +17,7 @@ class TElement extends StatelessWidget {
   final void Function() onPressed;
   final void Function() onDeletePressed;
   final IconData iconData;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class TElement extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
+          mainAxisSize: MainAxisSize.max,
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const SizedBox(width: 16),
@@ -35,29 +38,31 @@ class TElement extends StatelessWidget {
               color: ColorName.XBlack,
             ),
             const SizedBox(width: 32),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: textTheme.bodyLarge!.copyWith(
+                    color: ColorName.XBlack,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (subtitle != '') const SizedBox(height: 4),
+                if (subtitle != '')
                   Text(
-                    title,
-                    style: textTheme.bodyLarge!.copyWith(
-                      color: ColorName.XBlack,
-                      fontWeight: FontWeight.w600,
+                    subtitle,
+                    style: textTheme.bodyMedium!.copyWith(
+                      color: ColorName.XBlack.withAlpha(193),
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  if (subtitle != '') const SizedBox(height: 4),
-                  if (subtitle != '')
-                    Text(
-                      subtitle,
-                      style: textTheme.bodyMedium!.copyWith(
-                        color: ColorName.XBlack.withAlpha(193),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                ],
-              ),
+              ],
             ),
+            const Spacer(),
+            if (isAdmin)
+              IconButton(
+                  onPressed: onDeletePressed, icon: const Icon(Icons.delete)),
           ],
         ),
       ),

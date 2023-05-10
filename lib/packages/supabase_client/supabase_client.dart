@@ -119,6 +119,19 @@ class DatabaseClient {
     }
   }
 
+  Future<void> deleteUser({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('member').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
   Stream<dynamic> broker(String domain) {
     final domainClient = createSupabaseClient(domain);
     return domainClient.from('broker').stream(primaryKey: ['id']);
@@ -171,6 +184,19 @@ class DatabaseClient {
     }
   }
 
+  Future<void> deleteBroker({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('broker').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
   Stream<dynamic> group(String domain) {
     final domainClient = createSupabaseClient(domain);
     return domainClient.from('group').stream(primaryKey: ['id']);
@@ -193,6 +219,19 @@ class DatabaseClient {
             .from('group')
             .insert({'name': name, 'group_id': parentId});
       }
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
+  Future<void> deleteGroup({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('group').delete().match({'id': id});
     } catch (e) {
       log(e.toString());
       throw Exception('Something has been wrong!');
@@ -252,6 +291,19 @@ class DatabaseClient {
     }
   }
 
+  Future<void> deleteDevice({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('device').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
   Stream<dynamic> dashboard(String domain) {
     final domainClient = createSupabaseClient(domain);
     return domainClient.from('dashboard').stream(primaryKey: ['id']);
@@ -271,6 +323,19 @@ class DatabaseClient {
       } else {
         await domainClient.from('dashboard').insert({'name': name});
       }
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
+  Future<void> deleteDashboard({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('dashboard').delete().match({'id': id});
     } catch (e) {
       log(e.toString());
       throw Exception('Something has been wrong!');

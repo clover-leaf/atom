@@ -82,6 +82,12 @@ class UserRepository {
       _databaseClient.saveUser(
           domain: domain, id: id, username: username, password: password);
 
+  Future<void> deleteUser({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteUser(domain: domain, id: id);
+
   Stream<dynamic> broker(String domain) => _databaseClient.broker(domain);
 
   Future<List<dynamic>> getBrokers(String domain) =>
@@ -106,6 +112,12 @@ class UserRepository {
         id: id,
       );
 
+  Future<void> deleteBroker({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteBroker(domain: domain, id: id);
+
   Stream<dynamic> group(String domain) => _databaseClient.group(domain);
 
   Future<void> saveGroup({
@@ -116,6 +128,12 @@ class UserRepository {
   }) async =>
       _databaseClient.saveGroup(
           domain: domain, name: name, parentId: parentId, id: id);
+
+  Future<void> deleteGroup({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteGroup(domain: domain, id: id);
 
   Stream<dynamic> device(String domain) => _databaseClient.device(domain);
 
@@ -143,6 +161,12 @@ class UserRepository {
         id: id,
       );
 
+  Future<void> deleteDevice({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteDevice(domain: domain, id: id);
+
   Stream<dynamic> dashboard(String domain) => _databaseClient.dashboard(domain);
 
   Future<void> saveDashboard({
@@ -151,6 +175,12 @@ class UserRepository {
     String? id,
   }) async =>
       _databaseClient.saveDashboard(domain: domain, name: name, id: id);
+
+  Future<void> deleteDashboard({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteDashboard(domain: domain, id: id);
 
   Stream<dynamic> tile(String domain) => _databaseClient.tile(domain);
 

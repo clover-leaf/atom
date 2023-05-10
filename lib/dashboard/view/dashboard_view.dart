@@ -42,7 +42,10 @@ class DashboardView extends StatelessWidget {
                         isAdmin: isAdmin,
                         initialDashboard: Dashboard.fromJson(item),
                         isEdit: false)),
-                onDeletePressed: () {},
+                isAdmin: isAdmin,
+                onDeletePressed: () => context
+                    .read<DashboardBloc>()
+                    .add(DeleteDashboard(item['id'])),
               );
             });
       },

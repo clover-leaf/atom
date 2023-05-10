@@ -134,3 +134,12 @@ class TileValueViewChanged extends TileEvent {
   @override
   List<Object> get props => [tileValueView];
 }
+
+class DeleteDashboard extends TileEvent {
+  const DeleteDashboard({required this.dashboardId});
+
+  final String dashboardId;
+
+  @override
+  List<Object> get props => [dashboardId];
+}

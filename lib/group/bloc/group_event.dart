@@ -24,3 +24,21 @@ class GroupChanged extends GroupEvent {
   @override
   List<Object> get props => [group];
 }
+
+class DeleteGroup extends GroupEvent {
+  const DeleteGroup(this.groupId);
+
+  final String groupId;
+
+  @override
+  List<Object> get props => [groupId];
+}
+
+class DeleteDevice extends GroupEvent {
+  const DeleteDevice(this.deviceId);
+
+  final String deviceId;
+
+  @override
+  List<Object> get props => [deviceId];
+}

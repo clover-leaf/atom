@@ -41,7 +41,9 @@ class MemberView extends StatelessWidget {
                         isAdmin: isAdmin,
                         initialUser: User.fromJson(item),
                         isEdit: false)),
-                onDeletePressed: () {},
+                isAdmin: isAdmin,
+                onDeletePressed: () =>
+                    context.read<MemberBloc>().add(DeleteMember(item['id'])),
               );
             });
       },
