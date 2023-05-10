@@ -1,0 +1,66 @@
+import 'package:atom/gen/colors.gen.dart';
+import 'package:flutter/material.dart';
+
+class TElement extends StatelessWidget {
+  const TElement({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.onPressed,
+    required this.onDeletePressed,
+    required this.iconData,
+  });
+
+  final String title;
+  final String subtitle;
+  final void Function() onPressed;
+  final void Function() onDeletePressed;
+  final IconData iconData;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(width: 16),
+            Icon(
+              iconData,
+              color: ColorName.XBlack,
+            ),
+            const SizedBox(width: 32),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: textTheme.bodyLarge!.copyWith(
+                      color: ColorName.XBlack,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  if (subtitle != '') const SizedBox(height: 4),
+                  if (subtitle != '')
+                    Text(
+                      subtitle,
+                      style: textTheme.bodyMedium!.copyWith(
+                        color: ColorName.XBlack.withAlpha(193),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
