@@ -58,7 +58,8 @@ class TileChoosePage extends StatelessWidget {
               iconData: [
                 Icons.text_fields,
                 Icons.toggle_off,
-                Icons.vertical_align_bottom
+                Icons.vertical_align_bottom,
+                Icons.show_chart,
               ][index],
               onPressed: () => Navigator.of(context).push(TileEditPage.route(
                 domain: domain,

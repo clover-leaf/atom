@@ -115,6 +115,10 @@ class TileWidget extends StatelessWidget {
                   status!.isConnected &&
                   tile.type == TileType.button)
                 ButtonWidget(tile: tile, value: value ?? '...')
+              else if (status != null &&
+                  status!.isConnected &&
+                  tile.type == TileType.line)
+                LineWidget(value: value ?? '...')
             ],
           ),
         ),

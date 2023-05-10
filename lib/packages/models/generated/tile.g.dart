@@ -28,4 +28,5 @@ const _$TileTypeEnumMap = {
   TileType.text: 'Text',
   TileType.toggle: 'Switch',
   TileType.button: 'Button',
+  TileType.line: 'Line',
 };
