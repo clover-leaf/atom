@@ -2,7 +2,7 @@ import 'package:atom/common/lazy_indexed_stack.dart';
 import 'package:atom/common/t_element.dart';
 import 'package:atom/common/t_fill_button.dart';
 import 'package:atom/common/t_outline_button.dart';
-import 'package:atom/device_edit/view/device_edit_page.dart';
+import 'package:atom/device/view/device_page.dart';
 import 'package:atom/gen/colors.gen.dart';
 import 'package:atom/group/group.dart';
 import 'package:atom/packages/models/models.dart';
@@ -193,19 +193,10 @@ class DeviceList extends StatelessWidget {
                   isAdmin: isAdmin,
                   onDeletePressed: () =>
                       context.read<GroupBloc>().add(DeleteDevice(item['id'])),
-                  onPressed: () =>
-                      Navigator.of(context).push(DeviceEditPage.route(
+                  onPressed: () => Navigator.of(context).push(DevicePage.route(
                         domain: domain,
-                        initialId: item['id'],
-                        parentId: item['group_id'],
+                        device: Device.fromJson(item),
                         isAdmin: isAdmin,
-                        isEdit: false,
-                        initialName: item['name'],
-                        initialTopic: item['topic'],
-                        initialQos: item['qos'],
-                        initialJsonPath: item['json_path'],
-                        initialBrokerId: item['broker_id'],
-                        initialUnit: item['unit'],
                       )));
             });
         // Return your widget with the data from the snapshot

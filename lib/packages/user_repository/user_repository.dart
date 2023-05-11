@@ -255,4 +255,21 @@ class UserRepository {
         value: value,
         id: id,
       );
+
+  Stream<dynamic> record(String domain) => _databaseClient.record(domain);
+
+  Future<void> saveRecord({
+    required String domain,
+    required String deviceId,
+    required DateTime time,
+    required String value,
+    String? id,
+  }) async =>
+      _databaseClient.saveRecord(
+        domain: domain,
+        deviceId: deviceId,
+        time: time,
+        value: value,
+        id: id,
+      );
 }

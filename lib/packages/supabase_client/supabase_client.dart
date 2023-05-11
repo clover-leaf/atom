@@ -484,4 +484,37 @@ class DatabaseClient {
       throw Exception('Something has been wrong!');
     }
   }
+
+  Stream<dynamic> record(String domain) {
+    final domainClient = createSupabaseClient(domain);
+    return domainClient.from('record').stream(primaryKey: ['id']);
+  }
+
+  Future<void> saveRecord({
+    required String domain,
+    required String deviceId,
+    required DateTime time,
+    required String value,
+    String? id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      if (id != null) {
+        await domainClient.from('record').update({
+          'device_id': deviceId,
+          'time': time.toIso8601String(),
+          'value': value,
+        }).match({'id': id});
+      } else {
+        await domainClient.from('record').insert({
+          'device_id': deviceId,
+          'time': time.toIso8601String(),
+          'value': value,
+        });
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
 }

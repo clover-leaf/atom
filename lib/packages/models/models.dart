@@ -8,3 +8,4 @@ export 'tile.dart';
 export 'connection_status.dart';
 export 'alert.dart';
 export 'alert_record.dart';
+export 'record.dart';

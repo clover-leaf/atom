@@ -451,6 +451,8 @@ class TileBloc extends Bloc<TileEvent, TileState> {
         // update brokerTopicPayloads
         brokerTopic[topic] = payload;
         brokerTopicPayloads[brokerID] = brokerTopic;
+
+        // scan tile
         for (final tile in state.tiles) {
           final dv = state.deviceView[tile.deviceId]!;
           // update tile value view if device's broker and topic match
@@ -474,6 +476,7 @@ class TileBloc extends Bloc<TileEvent, TileState> {
           }
         }
 
+        // scan alert
         for (final alert in state.alerts) {
           final dv = state.deviceView[alert.deviceID]!;
           // update tile value view if device's broker and topic match
@@ -518,6 +521,42 @@ class TileBloc extends Bloc<TileEvent, TileState> {
             }
           }
         }
+
+        // scan device
+
+        for (final dv in state.devices) {
+          if (dv.brokerID == brokerID && dv.topic == topic) {
+            if (dv.jsonPath != '') {
+              final value = readJson(
+                expression: dv.jsonPath,
+                payload: payload,
+              );
+              if (value == '?') {
+                _userRepository.saveRecord(
+                  domain: state.domain,
+                  deviceId: dv.id,
+                  time: DateTime.now(),
+                  value: payload,
+                );
+              } else {
+                _userRepository.saveRecord(
+                  domain: state.domain,
+                  deviceId: dv.id,
+                  time: DateTime.now(),
+                  value: value,
+                );
+              }
+            } else {
+              _userRepository.saveRecord(
+                domain: state.domain,
+                deviceId: dv.id,
+                time: DateTime.now(),
+                value: payload,
+              );
+            }
+          }
+        }
+
         return state.copyWith(
           brokerTopicPayloads: brokerTopicPayloads,
           tileValueView: tileValueView,
