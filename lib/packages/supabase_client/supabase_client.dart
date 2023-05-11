@@ -262,6 +262,7 @@ class DatabaseClient {
     required String topic,
     required int qos,
     required String jsonPath,
+    required String? unit,
     String? id,
   }) async {
     try {
@@ -274,6 +275,7 @@ class DatabaseClient {
           'topic': topic,
           'qos': qos,
           'json_path': jsonPath,
+          'unit': unit,
         }).match({'id': id});
       } else {
         await domainClient.from('device').insert({
@@ -283,6 +285,7 @@ class DatabaseClient {
           'topic': topic,
           'qos': qos,
           'json_path': jsonPath,
+          'unit': unit,
         });
       }
     } catch (e) {

@@ -19,6 +19,7 @@ class DeviceEditBloc extends Bloc<DeviceEditEvent, DeviceEditState> {
     required int? initialQos,
     required String? initialJsonPath,
     required String? initialBrokerId,
+    required String? initialUnit,
   }) : super(DeviceEditState(
           isAdmin: isAdmin,
           domain: domain,
@@ -30,6 +31,7 @@ class DeviceEditBloc extends Bloc<DeviceEditEvent, DeviceEditState> {
           qos: initialQos ?? 0,
           jsonPath: initialJsonPath ?? '',
           brokerId: initialBrokerId ?? '',
+          unit: initialUnit,
         )) {
     on<GetBrokers>(_onGetBrokers);
     on<Submitted>(_onSubmitted);
@@ -38,6 +40,7 @@ class DeviceEditBloc extends Bloc<DeviceEditEvent, DeviceEditState> {
     on<QosChanged>(_onQosChanged);
     on<BrokerIdChanged>(_onBrokerIdChanged);
     on<JsonPathChanged>(_onJsonPathChanged);
+    on<UnitChanged>(_onUnitChanged);
     on<IsEditChanged>(_onIsEditChanged);
   }
 
@@ -82,6 +85,10 @@ class DeviceEditBloc extends Bloc<DeviceEditEvent, DeviceEditState> {
     emit(state.copyWith(jsonPath: event.jsonPath));
   }
 
+  void _onUnitChanged(UnitChanged event, Emitter<DeviceEditState> emit) {
+    emit(state.copyWith(unit: event.unit));
+  }
+
   Future<void> _onSubmitted(
     Submitted event,
     Emitter<DeviceEditState> emit,
@@ -97,6 +104,7 @@ class DeviceEditBloc extends Bloc<DeviceEditEvent, DeviceEditState> {
         qos: state.qos,
         brokerId: state.brokerId,
         jsonPath: state.jsonPath,
+        unit: state.unit,
       );
       emit(state.copyWith(status: DeviceEditStatus.success));
     } catch (error) {

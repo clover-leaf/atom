@@ -97,6 +97,7 @@ class GroupPage extends StatelessWidget {
                       initialQos: null,
                       initialJsonPath: null,
                       initialBrokerId: null,
+                      initialUnit: null,
                     )),
                   )
                 : null,

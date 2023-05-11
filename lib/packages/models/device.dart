@@ -20,6 +20,7 @@ class Device extends Equatable {
     required this.topic,
     required this.qos,
     required this.jsonPath,
+    required this.unit,
   });
 
   /// The ID
@@ -40,6 +41,8 @@ class Device extends Equatable {
   @JsonKey(name: 'json_path')
   final String jsonPath;
 
+  final String? unit;
+
   /// Deserializes the given [JsonMap] into a [Device].
   static Device fromJson(JsonMap json) {
     return _$DeviceFromJson(json);
@@ -57,6 +60,7 @@ class Device extends Equatable {
     String? topic,
     int? qos,
     String? jsonPath,
+    String? unit,
   }) {
     return Device(
       id: id ?? this.id,
@@ -66,10 +70,11 @@ class Device extends Equatable {
       topic: topic ?? this.topic,
       qos: qos ?? this.qos,
       jsonPath: jsonPath ?? this.jsonPath,
+      unit: unit ?? this.unit,
     );
   }
 
   @override
   List<Object?> get props =>
-      [id, groupID, brokerID, name, topic, qos, jsonPath];
+      [id, groupID, brokerID, name, topic, qos, jsonPath, unit];
 }

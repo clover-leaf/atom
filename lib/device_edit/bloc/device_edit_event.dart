@@ -60,6 +60,15 @@ class JsonPathChanged extends DeviceEditEvent {
   List<Object> get props => [jsonPath];
 }
 
+class UnitChanged extends DeviceEditEvent {
+  const UnitChanged(this.unit);
+
+  final String unit;
+
+  @override
+  List<Object> get props => [unit];
+}
+
 class IsEditChanged extends DeviceEditEvent {
   const IsEditChanged({required this.isEdit});
 

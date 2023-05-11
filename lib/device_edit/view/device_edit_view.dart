@@ -17,6 +17,7 @@ class DeviceEditView extends StatelessWidget {
     required this.initialQos,
     required this.initialJsonPath,
     required this.initialBrokerId,
+    required this.initialUnit,
     required this.initialBrokers,
   });
 
@@ -25,6 +26,7 @@ class DeviceEditView extends StatelessWidget {
   final int? initialQos;
   final String? initialJsonPath;
   final String? initialBrokerId;
+  final String? initialUnit;
   final List<Broker> initialBrokers;
 
   @override
@@ -186,6 +188,18 @@ class DeviceEditView extends StatelessWidget {
                           onChanged: (jsonPath) => context
                               .read<DeviceEditBloc>()
                               .add(JsonPathChanged(jsonPath)),
+                          validator: (value) {
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 24),
+                        const TLabelField(title: 'Unit (optional)'),
+                        TSimplyTextField(
+                          initText: initialUnit,
+                          enabled: isEdit,
+                          onChanged: (topic) => context
+                              .read<DeviceEditBloc>()
+                              .add(UnitChanged(topic)),
                           validator: (value) {
                             return null;
                           },

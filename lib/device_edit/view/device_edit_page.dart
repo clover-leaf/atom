@@ -13,6 +13,7 @@ class DeviceEditPage extends StatelessWidget {
     required this.initialQos,
     required this.initialJsonPath,
     required this.initialBrokerId,
+    required this.initialUnit,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class DeviceEditPage extends StatelessWidget {
   final int? initialQos;
   final String? initialJsonPath;
   final String? initialBrokerId;
+  final String? initialUnit;
 
   static PageRoute<void> route({
     required String domain,
@@ -33,6 +35,7 @@ class DeviceEditPage extends StatelessWidget {
     required int? initialQos,
     required String? initialJsonPath,
     required String? initialBrokerId,
+    required String? initialUnit,
   }) =>
       PageRouteBuilder<void>(
         pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
@@ -46,6 +49,7 @@ class DeviceEditPage extends StatelessWidget {
               initialQos: initialQos,
               initialJsonPath: initialJsonPath,
               initialBrokerId: initialBrokerId,
+              initialUnit: initialUnit,
               isEdit: isEdit)
             ..add(const GetBrokers()),
           child: DeviceEditPage(
@@ -54,6 +58,7 @@ class DeviceEditPage extends StatelessWidget {
             initialQos: initialQos,
             initialJsonPath: initialJsonPath,
             initialBrokerId: initialBrokerId,
+            initialUnit: initialUnit,
           ),
         ),
       );
@@ -71,6 +76,7 @@ class DeviceEditPage extends StatelessWidget {
           initialQos: initialQos,
           initialJsonPath: initialJsonPath,
           initialBrokerId: initialBrokerId,
+          initialUnit: initialUnit,
           initialBrokers: brokers,
         ));
   }

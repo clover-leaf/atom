@@ -71,6 +71,7 @@ class TileView extends StatelessWidget {
                         status: brokerStatusView[device?.brokerID],
                         isAdmin: isAdmin,
                         domain: domain,
+                        unit: device?.unit,
                         dashboardId: selectedDashboardId,
                       );
                     },

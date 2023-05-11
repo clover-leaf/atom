@@ -205,6 +205,7 @@ class DeviceList extends StatelessWidget {
                         initialQos: item['qos'],
                         initialJsonPath: item['json_path'],
                         initialBrokerId: item['broker_id'],
+                        initialUnit: item['unit'],
                       )));
             });
         // Return your widget with the data from the snapshot

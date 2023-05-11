@@ -15,11 +15,13 @@ class TileWidget extends StatelessWidget {
     required this.isAdmin,
     required this.domain,
     required this.dashboardId,
+    required this.unit,
     super.key,
   });
 
   final String domain;
   final String dashboardId;
+  final String? unit;
   final Tile tile;
   final double width;
   final String? value;
@@ -108,7 +110,7 @@ class TileWidget extends StatelessWidget {
               else if (status != null &&
                   status!.isConnected &&
                   tile.type == TileType.text)
-                TextWidget(value: value ?? '...')
+                TextWidget(value: value ?? '...', unit: unit)
               else if (status != null &&
                   status!.isConnected &&
                   tile.type == TileType.toggle)
@@ -120,7 +122,10 @@ class TileWidget extends StatelessWidget {
               else if (status != null &&
                   status!.isConnected &&
                   tile.type == TileType.line)
-                LineWidget(value: value ?? '...')
+                LineWidget(
+                  value: value ?? '...',
+                  unit: unit,
+                )
             ],
           ),
         ),

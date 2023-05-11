@@ -6,9 +6,11 @@ class LineWidget extends StatefulWidget {
   const LineWidget({
     super.key,
     required this.value,
+    required this.unit,
   });
 
   final String value;
+  final String? unit;
 
   @override
   State<LineWidget> createState() => _LineWidgetState();
@@ -121,13 +123,20 @@ class _LineWidgetState extends State<LineWidget> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          value,
-                          style: textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: ColorName.neural700,
+                        if (widget.unit != null)
+                          Text('$value ${widget.unit}',
+                              style: textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: ColorName.neural700,
+                              ))
+                        else
+                          Text(
+                            value,
+                            style: textTheme.titleMedium!.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: ColorName.neural700,
+                            ),
                           ),
-                        ),
                         if (iconData != null) Icon(iconData),
                         if (percentDeviant != null)
                           Text(

@@ -26,6 +26,7 @@ class DeviceEditState extends Equatable {
     this.topic = '',
     this.qos = 0,
     this.jsonPath = '',
+    this.unit,
     this.initialId,
     this.error,
   });
@@ -45,6 +46,7 @@ class DeviceEditState extends Equatable {
   final String topic;
   final int qos;
   final String jsonPath;
+  final String? unit;
 
   // status
   final DeviceEditStatus status;
@@ -63,6 +65,7 @@ class DeviceEditState extends Equatable {
         topic,
         qos,
         jsonPath,
+        unit,
         status,
         error
       ];
@@ -77,6 +80,7 @@ class DeviceEditState extends Equatable {
     String? topic,
     int? qos,
     String? jsonPath,
+    String? unit,
     bool? isEdit,
     DeviceEditStatus? status,
     String? initialId,
@@ -92,6 +96,7 @@ class DeviceEditState extends Equatable {
       topic: topic ?? this.topic,
       qos: qos ?? this.qos,
       jsonPath: jsonPath ?? this.jsonPath,
+      unit: unit ?? this.unit,
       isEdit: isEdit ?? this.isEdit,
       status: status ?? this.status,
       initialId: initialId ?? this.initialId,

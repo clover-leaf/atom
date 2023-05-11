@@ -14,6 +14,7 @@ Device _$DeviceFromJson(Map<String, dynamic> json) => Device(
       topic: json['topic'] as String,
       qos: json['qos'] as int,
       jsonPath: json['json_path'] as String,
+      unit: json['unit'] as String?,
     );
 
 Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
@@ -24,4 +25,5 @@ Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
       'topic': instance.topic,
       'qos': instance.qos,
       'json_path': instance.jsonPath,
+      'unit': instance.unit,
     };

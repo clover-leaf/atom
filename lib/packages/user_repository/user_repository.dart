@@ -148,6 +148,7 @@ class UserRepository {
     required String topic,
     required int qos,
     required String jsonPath,
+    required String? unit,
     String? id,
   }) async =>
       _databaseClient.saveDevice(
@@ -158,6 +159,7 @@ class UserRepository {
         topic: topic,
         qos: qos,
         jsonPath: jsonPath,
+        unit: unit,
         id: id,
       );
 
