@@ -20,8 +20,8 @@ class ToggleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final decoded = jsonDecode(tile.lob) as Map<String, dynamic>;
-    final left = decoded['left']! as String;
-    final right = decoded['right']! as String;
+    final left = (decoded['left']!).toString();
+    final right = (decoded['right']!).toString();
     final isActiveLeft = value == left;
     final isActiveRight = value == right;
 

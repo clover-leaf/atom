@@ -546,9 +546,13 @@ class TileBloc extends Bloc<TileEvent, TileState> {
   /// write value to json by expression
   String writeJson({required String expression, required String value}) {
     try {
-      final pointer = JsonPointer(expression);
-      final payload = pointer.write({}, value);
-      return jsonEncode(payload);
+      if (expression == '') {
+        return value;
+      } else {
+        final pointer = JsonPointer(expression);
+        final payload = pointer.write({}, value);
+        return jsonEncode(payload);
+      }
     } catch (e) {
       throw Exception();
     }

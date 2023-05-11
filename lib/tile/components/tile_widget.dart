@@ -52,11 +52,13 @@ class TileWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    tile.name.toUpperCase(),
-                    style: textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: ColorName.XBlack,
+                  Expanded(
+                    child: Text(
+                      tile.name.toUpperCase(),
+                      style: textTheme.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: ColorName.XBlack,
+                      ),
                     ),
                   ),
                   IconButton(
