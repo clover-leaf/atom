@@ -43,6 +43,8 @@ class DatabaseClient {
       await supabaseClient.rpc('create_device', params: {'s_name': domain});
       await supabaseClient.rpc('create_tile', params: {'s_name': domain});
       await supabaseClient.rpc('create_alert', params: {'s_name': domain});
+      await supabaseClient
+          .rpc('create_alert_record', params: {'s_name': domain});
 
       final domainClient = createSupabaseClient(domain);
       await domainClient.from('member').insert(
