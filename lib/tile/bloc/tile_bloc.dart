@@ -41,6 +41,9 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     on<TileChanged>(_onTileChanged);
     on<BrokerChanged>(_onBrokerChanged);
     on<DeviceChanged>(_onDeviceChanged);
+    on<AlertChanged>(_onAlertChanged);
+    on<AlertRecordChanged>(_onAlertRecordChanged);
+    on<IsReadChanged>(_onIsReadChanged);
     on<DashboardIdChanged>(_onDashboardIdChanged);
     on<GatewayClientViewChanged>(_onGatewayClientViewChanged);
     on<BrokerTopicPayloadsChanged>(_onBrokerTopicPayloadsChanged);
@@ -54,6 +57,8 @@ class TileBloc extends Bloc<TileEvent, TileState> {
   StreamSubscription<dynamic>? _tileSubsription;
   StreamSubscription<dynamic>? _deviceSubsription;
   StreamSubscription<dynamic>? _brokerSubsription;
+  StreamSubscription<dynamic>? _alertSubsription;
+  StreamSubscription<dynamic>? _alertRecordSubsription;
 
   Future<void> _onDeleteDashboard(
       DeleteDashboard event, Emitter<TileState> emit) async {
@@ -322,6 +327,24 @@ class TileBloc extends Bloc<TileEvent, TileState> {
       handleTileChange(tiles, state);
     });
 
+    _alertSubsription = _userRepository.alert(state.domain).listen((data) {
+      final alerts = (data as List<dynamic>)
+          .map((e) => Alert.fromJson(e as Map<String, dynamic>))
+          .toList();
+      add(AlertChanged(alerts: alerts));
+    });
+
+    _alertRecordSubsription =
+        _userRepository.alertRecord(state.domain).listen((data) {
+      final alertRecords = (data as List<dynamic>)
+          .map((e) => AlertRecord.fromJson(e as Map<String, dynamic>))
+          .toList();
+      add(AlertRecordChanged(alertRecords: alertRecords));
+      if (state.alertRecords.isNotEmpty) {
+        add(const IsReadChanged(isRead: false));
+      }
+    });
+
     emit(state.copyWith(status: TileStatus.normal));
 
     // clone and update gatewayClients
@@ -450,6 +473,51 @@ class TileBloc extends Bloc<TileEvent, TileState> {
             }
           }
         }
+
+        for (final alert in state.alerts) {
+          final dv = state.deviceView[alert.deviceID]!;
+          // update tile value view if device's broker and topic match
+          // with payload's broker and topic
+          if (dv.brokerID == brokerID && dv.topic == topic) {
+            bool? lcompare;
+            bool? rcompare;
+            late String activeValue = payload;
+            if (dv.jsonPath != '') {
+              final value = readJson(
+                expression: dv.jsonPath,
+                payload: payload,
+              );
+              if (value != '?' && double.tryParse(value) != null) {
+                activeValue = value;
+                lcompare = double.parse(value) < double.parse(alert.lvalue);
+                rcompare = double.parse(value) > double.parse(alert.rvalue);
+              }
+            } else {
+              lcompare = double.parse(payload) < double.parse(alert.lvalue);
+              rcompare = double.parse(payload) > double.parse(alert.rvalue);
+            }
+            if (lcompare != null && rcompare != null) {
+              // AND
+              if (alert.relate && lcompare && rcompare) {
+                _userRepository.saveAlertRecord(
+                  domain: state.domain,
+                  alertId: alert.id,
+                  time: DateTime.now(),
+                  value: activeValue,
+                );
+              }
+              // OR
+              else if (!alert.relate && (lcompare || rcompare)) {
+                _userRepository.saveAlertRecord(
+                  domain: state.domain,
+                  alertId: alert.id,
+                  time: DateTime.now(),
+                  value: activeValue,
+                );
+              }
+            }
+          }
+        }
         return state.copyWith(
           brokerTopicPayloads: brokerTopicPayloads,
           tileValueView: tileValueView,
@@ -523,6 +591,19 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     emit(state.copyWith(tileValueView: event.tileValueView));
   }
 
+  void _onAlertChanged(AlertChanged event, Emitter<TileState> emit) {
+    emit(state.copyWith(alerts: event.alerts));
+  }
+
+  void _onAlertRecordChanged(
+      AlertRecordChanged event, Emitter<TileState> emit) {
+    emit(state.copyWith(alertRecords: event.alertRecords));
+  }
+
+  void _onIsReadChanged(IsReadChanged event, Emitter<TileState> emit) {
+    emit(state.copyWith(isReadRecord: event.isRead));
+  }
+
   /// get value in json by expression
   String readJson({required String expression, required String payload}) {
     try {
@@ -564,6 +645,7 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     _tileSubsription?.cancel();
     _brokerSubsription?.cancel();
     _deviceSubsription?.cancel();
+    _alertSubsription?.cancel();
     return super.close();
   }
 }

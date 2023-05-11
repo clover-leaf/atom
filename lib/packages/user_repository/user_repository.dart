@@ -210,4 +210,49 @@ class UserRepository {
     required String id,
   }) async =>
       _databaseClient.deleteTile(domain: domain, id: id);
+
+  Stream<dynamic> alert(String domain) => _databaseClient.alert(domain);
+
+  Future<void> saveAlert({
+    required String domain,
+    required String name,
+    required String deviceId,
+    required bool relate,
+    required String lvalue,
+    required String rvalue,
+    String? id,
+  }) async =>
+      _databaseClient.saveAlert(
+        domain: domain,
+        name: name,
+        deviceId: deviceId,
+        relate: relate,
+        lvalue: lvalue,
+        rvalue: rvalue,
+        id: id,
+      );
+
+  Future<void> deleteAlert({
+    required String domain,
+    required String id,
+  }) async =>
+      _databaseClient.deleteAlert(domain: domain, id: id);
+
+  Stream<dynamic> alertRecord(String domain) =>
+      _databaseClient.alertRecord(domain);
+
+  Future<void> saveAlertRecord({
+    required String domain,
+    required String alertId,
+    required DateTime time,
+    required String value,
+    String? id,
+  }) async =>
+      _databaseClient.saveAlertRecord(
+        domain: domain,
+        alertId: alertId,
+        time: time,
+        value: value,
+        id: id,
+      );
 }

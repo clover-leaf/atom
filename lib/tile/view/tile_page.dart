@@ -1,3 +1,5 @@
+import 'package:atom/alert/view/alert_page.dart';
+import 'package:atom/alert_record/view/alert_record_page.dart';
 import 'package:atom/broker/view/broker_page.dart';
 import 'package:atom/gen/colors.gen.dart';
 import 'package:atom/group/view/view.dart';
@@ -29,6 +31,7 @@ class TilePage extends StatelessWidget {
     final domain = context.select((TileBloc bloc) => bloc.state.domain);
     final isAdmin = context.select((TileBloc bloc) => bloc.state.isAdmin);
     final dashboards = context.select((TileBloc bloc) => bloc.state.dashboards);
+    final isRead = context.select((TileBloc bloc) => bloc.state.isReadRecord);
 
     return Scaffold(
       backgroundColor: ColorName.XWhite,
@@ -94,6 +97,27 @@ class TilePage extends StatelessWidget {
                 group: null,
               )),
             ),
+            MenuOption(
+              title: 'Alert',
+              iconData: Icons.campaign_outlined,
+              onTap: () => Navigator.of(context).push(AlertPage.route(
+                domain: domain,
+                isAdmin: isAdmin,
+              )),
+            ),
+            BadgeMenuOption(
+                title: 'Alert Record',
+                showBadge: !isRead,
+                iconData: Icons.sms_failed_outlined,
+                onTap: () {
+                  Navigator.of(context).push(AlertRecordPage.route(
+                    domain: domain,
+                    isAdmin: isAdmin,
+                  ));
+                  context
+                      .read<TileBloc>()
+                      .add(const IsReadChanged(isRead: true));
+                }),
             MenuOption(
               title: 'Logout',
               iconData: Icons.logout,

@@ -27,6 +27,9 @@ class TileState extends Equatable {
     this.dashboards = const [],
     this.tiles = const [],
     this.devices = const [],
+    this.alerts = const [],
+    this.alertRecords = const [],
+    this.isReadRecord = true,
   });
 
   // immutable
@@ -38,7 +41,10 @@ class TileState extends Equatable {
   final List<Device> devices;
   final List<Dashboard> dashboards;
   final List<Tile> tiles;
+  final List<Alert> alerts;
+  final List<AlertRecord> alertRecords;
 
+  final bool isReadRecord;
   final TileStatus status;
 
   /// <BrokerID, GatewayClient>
@@ -99,11 +105,14 @@ class TileState extends Equatable {
         tiles,
         brokers,
         devices,
+        alerts,
         brokerStatusView,
         gatewayClientView,
         brokerTopicPayloads,
         tileValueView,
-        selectedDashboardId
+        selectedDashboardId,
+        isReadRecord,
+        alertRecords,
       ];
 
   TileState copyWith({
@@ -114,11 +123,14 @@ class TileState extends Equatable {
     List<Tile>? tiles,
     List<Broker>? brokers,
     List<Device>? devices,
+    List<Alert>? alerts,
+    List<AlertRecord>? alertRecords,
     Map<FieldId, GatewayClient>? gatewayClientView,
     Map<FieldId, Map<String, String?>>? brokerTopicPayloads,
     Map<FieldId, String?>? tileValueView,
     Map<FieldId, ConnectionStatus>? brokerStatusView,
     String? selectedDashboardId,
+    bool? isReadRecord,
   }) {
     return TileState(
       status: status ?? this.status,
@@ -128,11 +140,14 @@ class TileState extends Equatable {
       tiles: tiles ?? this.tiles,
       brokers: brokers ?? this.brokers,
       devices: devices ?? this.devices,
+      alerts: alerts ?? this.alerts,
+      alertRecords: alertRecords ?? this.alertRecords,
       gatewayClientView: gatewayClientView ?? this.gatewayClientView,
       brokerTopicPayloads: brokerTopicPayloads ?? this.brokerTopicPayloads,
       tileValueView: tileValueView ?? this.tileValueView,
       brokerStatusView: brokerStatusView ?? this.brokerStatusView,
       selectedDashboardId: selectedDashboardId ?? this.selectedDashboardId,
+      isReadRecord: isReadRecord ?? this.isReadRecord,
     );
   }
 }

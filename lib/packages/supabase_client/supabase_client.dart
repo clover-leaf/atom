@@ -42,6 +42,7 @@ class DatabaseClient {
       await supabaseClient.rpc('create_group', params: {'s_name': domain});
       await supabaseClient.rpc('create_device', params: {'s_name': domain});
       await supabaseClient.rpc('create_tile', params: {'s_name': domain});
+      await supabaseClient.rpc('create_alert', params: {'s_name': domain});
 
       final domainClient = createSupabaseClient(domain);
       await domainClient.from('member').insert(
@@ -391,6 +392,91 @@ class DatabaseClient {
     try {
       final domainClient = await getSupabaseClient(domain);
       await domainClient.from('tile').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
+  Stream<dynamic> alert(String domain) {
+    final domainClient = createSupabaseClient(domain);
+    return domainClient.from('alert').stream(primaryKey: ['id']);
+  }
+
+  Future<void> saveAlert({
+    required String domain,
+    required String name,
+    required String deviceId,
+    required bool relate,
+    required String lvalue,
+    required String rvalue,
+    String? id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      if (id != null) {
+        await domainClient.from('alert').update({
+          'name': name,
+          'device_id': deviceId,
+          'relate': relate,
+          'lvalue': lvalue,
+          'rvalue': rvalue,
+        }).match({'id': id});
+      } else {
+        await domainClient.from('alert').insert({
+          'name': name,
+          'device_id': deviceId,
+          'relate': relate,
+          'lvalue': lvalue,
+          'rvalue': rvalue,
+        });
+      }
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
+  Future<void> deleteAlert({
+    required String domain,
+    required String id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      await domainClient.from('alert').delete().match({'id': id});
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Something has been wrong!');
+    }
+  }
+
+  Stream<dynamic> alertRecord(String domain) {
+    final domainClient = createSupabaseClient(domain);
+    return domainClient.from('alert_record').stream(primaryKey: ['id']);
+  }
+
+  Future<void> saveAlertRecord({
+    required String domain,
+    required String alertId,
+    required DateTime time,
+    required String value,
+    String? id,
+  }) async {
+    try {
+      final domainClient = await getSupabaseClient(domain);
+      if (id != null) {
+        await domainClient.from('alert_record').update({
+          'alert_id': alertId,
+          'time': time.toIso8601String(),
+          'value': value,
+        }).match({'id': id});
+      } else {
+        await domainClient.from('alert_record').insert({
+          'alert_id': alertId,
+          'time': time.toIso8601String(),
+          'value': value,
+        });
+      }
     } catch (e) {
       log(e.toString());
       throw Exception('Something has been wrong!');

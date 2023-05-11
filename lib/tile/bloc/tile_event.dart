@@ -108,6 +108,33 @@ class DeviceChanged extends TileEvent {
   List<Object> get props => [devices];
 }
 
+class AlertChanged extends TileEvent {
+  const AlertChanged({required this.alerts});
+
+  final List<Alert> alerts;
+
+  @override
+  List<Object> get props => [alerts];
+}
+
+class AlertRecordChanged extends TileEvent {
+  const AlertRecordChanged({required this.alertRecords});
+
+  final List<AlertRecord> alertRecords;
+
+  @override
+  List<Object> get props => [alertRecords];
+}
+
+class IsReadChanged extends TileEvent {
+  const IsReadChanged({required this.isRead});
+
+  final bool isRead;
+
+  @override
+  List<Object> get props => [isRead];
+}
+
 class GatewayClientViewChanged extends TileEvent {
   const GatewayClientViewChanged({required this.gatewayClientView});
 

@@ -105,15 +105,9 @@ class _Header extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-            ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
+            child: TMenuButton(),
           ),
           Text(
             dashboardName,
