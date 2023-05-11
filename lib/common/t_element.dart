@@ -38,26 +38,38 @@ class TElement extends StatelessWidget {
               color: ColorName.XBlack,
             ),
             const SizedBox(width: 32),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: textTheme.bodyLarge!.copyWith(
-                    color: ColorName.XBlack,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                if (subtitle != '') const SizedBox(height: 4),
-                if (subtitle != '')
+            Container(
+              alignment: Alignment.centerLeft,
+              height: 48,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
-                    subtitle,
-                    style: textTheme.bodyMedium!.copyWith(
-                      color: ColorName.XBlack.withAlpha(193),
-                      fontWeight: FontWeight.w500,
+                    title,
+                    style: textTheme.bodyLarge!.copyWith(
+                      color: ColorName.XBlack,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-              ],
+                  if (subtitle != '') const SizedBox(height: 4),
+                  if (subtitle != '')
+                    Expanded(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            subtitle,
+                            style: textTheme.bodyMedium!.copyWith(
+                              color: ColorName.XBlack.withAlpha(193),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
             const Spacer(),
             if (isAdmin)
