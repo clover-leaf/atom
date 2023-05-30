@@ -51,34 +51,37 @@ class TileView extends StatelessWidget {
           }
         }
       },
-      child: Column(
-        children: [
-          _Header(selectedDashboardName),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: showTile.map<Widget>(
-                    (tile) {
-                      final device = deviceView[tile.deviceId];
+      child: ColoredBox(
+        color: ColorName.XWhite,
+        child: Column(
+          children: [
+            _Header(selectedDashboardName),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: showTile.map<Widget>(
+                      (tile) {
+                        final device = deviceView[tile.deviceId];
 
-                      return TileWidget(
-                        tile: tile,
-                        width: tileWidth,
-                        value: tileValueView[tile.id],
-                        status: brokerStatusView[device?.brokerID],
-                        isAdmin: isAdmin,
-                        domain: domain,
-                        unit: device?.unit,
-                        dashboardId: selectedDashboardId,
-                      );
-                    },
-                  ).toList()),
-            ),
-          )
-        ],
+                        return TileWidget(
+                          tile: tile,
+                          width: tileWidth,
+                          value: tileValueView[tile.id],
+                          status: brokerStatusView[device?.brokerID],
+                          isAdmin: isAdmin,
+                          domain: domain,
+                          unit: device?.unit,
+                          dashboardId: selectedDashboardId,
+                        );
+                      },
+                    ).toList()),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
