@@ -53,6 +53,10 @@ class TileView extends StatelessWidget {
       },
       child: Column(
         children: [
+          Container(
+            height: MediaQuery.of(context).viewPadding.top,
+            color: ColorName.XRed,
+          ),
           _Header(selectedDashboardName),
           Expanded(
             child: Padding(
