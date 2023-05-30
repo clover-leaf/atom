@@ -477,85 +477,84 @@ class TileBloc extends Bloc<TileEvent, TileState> {
         }
 
         // scan alert
-        for (final alert in state.alerts) {
-          final dv = state.deviceView[alert.deviceID]!;
-          // update tile value view if device's broker and topic match
-          // with payload's broker and topic
-          if (dv.brokerID == brokerID && dv.topic == topic) {
-            bool? lcompare;
-            bool? rcompare;
-            late String activeValue = payload;
-            if (dv.jsonPath != '') {
-              final value = readJson(
-                expression: dv.jsonPath,
-                payload: payload,
-              );
-              if (value != '?' && double.tryParse(value) != null) {
-                activeValue = value;
-                lcompare = double.parse(value) < double.parse(alert.lvalue);
-                rcompare = double.parse(value) > double.parse(alert.rvalue);
-              }
-            } else {
-              lcompare = double.parse(payload) < double.parse(alert.lvalue);
-              rcompare = double.parse(payload) > double.parse(alert.rvalue);
-            }
-            if (lcompare != null && rcompare != null) {
-              // AND
-              if (alert.relate && lcompare && rcompare) {
-                _userRepository.saveAlertRecord(
-                  domain: state.domain,
-                  alertId: alert.id,
-                  time: DateTime.now(),
-                  value: activeValue,
-                );
-              }
-              // OR
-              else if (!alert.relate && (lcompare || rcompare)) {
-                _userRepository.saveAlertRecord(
-                  domain: state.domain,
-                  alertId: alert.id,
-                  time: DateTime.now(),
-                  value: activeValue,
-                );
-              }
-            }
-          }
-        }
+        // for (final alert in state.alerts) {
+        //   final dv = state.deviceView[alert.deviceID]!;
+        //   // update tile value view if device's broker and topic match
+        //   // with payload's broker and topic
+        //   if (dv.brokerID == brokerID && dv.topic == topic) {
+        //     bool? lcompare;
+        //     bool? rcompare;
+        //     late String activeValue = payload;
+        //     if (dv.jsonPath != '') {
+        //       final value = readJson(
+        //         expression: dv.jsonPath,
+        //         payload: payload,
+        //       );
+        //       if (value != '?' && double.tryParse(value) != null) {
+        //         activeValue = value;
+        //         lcompare = double.parse(value) < double.parse(alert.lvalue);
+        //         rcompare = double.parse(value) > double.parse(alert.rvalue);
+        //       }
+        //     } else {
+        //       lcompare = double.parse(payload) < double.parse(alert.lvalue);
+        //       rcompare = double.parse(payload) > double.parse(alert.rvalue);
+        //     }
+        //     if (lcompare != null && rcompare != null) {
+        //       // AND
+        //       if (alert.relate && lcompare && rcompare) {
+        //         _userRepository.saveAlertRecord(
+        //           domain: state.domain,
+        //           alertId: alert.id,
+        //           time: DateTime.now(),
+        //           value: activeValue,
+        //         );
+        //       }
+        //       // OR
+        //       else if (!alert.relate && (lcompare || rcompare)) {
+        //         _userRepository.saveAlertRecord(
+        //           domain: state.domain,
+        //           alertId: alert.id,
+        //           time: DateTime.now(),
+        //           value: activeValue,
+        //         );
+        //       }
+        //     }
+        //   }
+        // }
 
         // scan device
-
-        for (final dv in state.devices) {
-          if (dv.brokerID == brokerID && dv.topic == topic) {
-            if (dv.jsonPath != '') {
-              final value = readJson(
-                expression: dv.jsonPath,
-                payload: payload,
-              );
-              if (value == '?') {
-                _userRepository.saveRecord(
-                  domain: state.domain,
-                  deviceId: dv.id,
-                  time: DateTime.now(),
-                  value: payload,
-                );
-              } else {
-                _userRepository.saveRecord(
-                  domain: state.domain,
-                  deviceId: dv.id,
-                  time: DateTime.now(),
-                  value: value,
-                );
-              }
-            } else {
-              _userRepository.saveRecord(
-                domain: state.domain,
-                deviceId: dv.id,
-                time: DateTime.now(),
-                value: payload,
-              );
-            }
-          }
-        }
+        // for (final dv in state.devices) {
+        //   if (dv.brokerID == brokerID && dv.topic == topic) {
+        //     if (dv.jsonPath != '') {
+        //       final value = readJson(
+        //         expression: dv.jsonPath,
+        //         payload: payload,
+        //       );
+        //       if (value == '?') {
+        //         _userRepository.saveRecord(
+        //           domain: state.domain,
+        //           deviceId: dv.id,
+        //           time: DateTime.now(),
+        //           value: payload,
+        //         );
+        //       } else {
+        //         _userRepository.saveRecord(
+        //           domain: state.domain,
+        //           deviceId: dv.id,
+        //           time: DateTime.now(),
+        //           value: value,
+        //         );
+        //       }
+        //     } else {
+        //       _userRepository.saveRecord(
+        //         domain: state.domain,
+        //         deviceId: dv.id,
+        //         time: DateTime.now(),
+        //         value: payload,
+        //       );
+        //     }
+        //   }
+        // }
 
         return state.copyWith(
           brokerTopicPayloads: brokerTopicPayloads,
