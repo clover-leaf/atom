@@ -5,7 +5,6 @@ import 'package:atom/tile_choose/tile_choose_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'dart:ui';
 
 class TileView extends StatelessWidget {
   const TileView({super.key});
@@ -54,10 +53,6 @@ class TileView extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-            height: window.padding.top,
-            color: ColorName.XRed,
-          ),
           _Header(selectedDashboardName),
           Expanded(
             child: Padding(

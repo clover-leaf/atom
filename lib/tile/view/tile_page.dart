@@ -130,7 +130,10 @@ class TilePage extends StatelessWidget {
           ],
         ),
       ),
-      body: const TileView(),
+      body: const ColoredBox(
+        color: ColorName.XRed,
+        child: SafeArea(child: TileView()),
+      ),
     );
   }
 }
