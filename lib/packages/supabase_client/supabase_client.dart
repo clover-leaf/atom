@@ -65,7 +65,7 @@ class DatabaseClient {
       final domainClient = await getSupabaseClient(domain);
       final res = await domainClient
           .from('member')
-          .select('is_admin')
+          .select()
           .eq('username', username)
           .eq('password', password)
           .single();

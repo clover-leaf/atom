@@ -9,6 +9,7 @@ import 'package:atom/packages/user_repository/user_repository.dart';
 import 'package:atom/tile/tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'tile_view.dart';
 
@@ -119,11 +120,13 @@ class TilePage extends StatelessWidget {
                       .add(const IsReadChanged(isRead: true));
                 }),
             MenuOption(
-              title: 'Logout',
-              iconData: Icons.logout,
-              onTap: () => Navigator.of(context)
-                  .pushAndRemoveUntil(LoginPage.route(), (route) => false),
-            ),
+                title: 'Logout',
+                iconData: Icons.logout,
+                onTap: () async {
+                  Navigator.of(context)
+                      .pushAndRemoveUntil(LoginPage.route(), (route) => false);
+                  await OneSignal.shared.removeExternalUserId();
+                }),
           ],
         ),
       ),

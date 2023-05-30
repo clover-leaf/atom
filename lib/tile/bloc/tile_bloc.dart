@@ -685,6 +685,7 @@ class TileBloc extends Bloc<TileEvent, TileState> {
     _brokerSubsription?.cancel();
     _deviceSubsription?.cancel();
     _alertSubsription?.cancel();
+    _alertRecordSubsription?.cancel();
     return super.close();
   }
 }
