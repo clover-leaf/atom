@@ -455,7 +455,9 @@ class DatabaseClient {
 
   Stream<dynamic> alertRecord(String domain) {
     final domainClient = createSupabaseClient(domain);
-    return domainClient.from('alert_record').stream(primaryKey: ['id']);
+    return domainClient
+        .from('alert_record')
+        .stream(primaryKey: ['id']).order('time');
   }
 
   Future<void> saveAlertRecord({
@@ -488,7 +490,7 @@ class DatabaseClient {
 
   Stream<dynamic> record(String domain) {
     final domainClient = createSupabaseClient(domain);
-    return domainClient.from('record').stream(primaryKey: ['id']);
+    return domainClient.from('record').stream(primaryKey: ['id']).order('time');
   }
 
   Future<void> saveRecord({
