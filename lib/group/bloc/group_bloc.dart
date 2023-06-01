@@ -35,7 +35,7 @@ class GroupBloc extends Bloc<GroupEvent, GroupState> {
 
   Future<void> _onDeleteGroup(
       DeleteGroup event, Emitter<GroupState> emit) async {
-    await _userRepository.deleteBroker(domain: state.domain, id: event.groupId);
+    await _userRepository.deleteGroup(domain: state.domain, id: event.groupId);
   }
 
   Future<void> _onDeleteDevice(

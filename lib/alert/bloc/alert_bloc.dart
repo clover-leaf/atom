@@ -18,6 +18,6 @@ class AlertBloc extends Bloc<AlertEvent, AlertState> {
 
   Future<void> _onDeleteAlert(
       DeleteAlert event, Emitter<AlertState> emit) async {
-    await _userRepository.deleteUser(domain: state.domain, id: event.alertId);
+    await _userRepository.deleteAlert(domain: state.domain, id: event.alertId);
   }
 }
