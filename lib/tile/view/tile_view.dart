@@ -109,7 +109,7 @@ class _Header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Padding(
-            padding: EdgeInsets.fromLTRB(8, 0, 16, 0),
+            padding: EdgeInsets.fromLTRB(8, 0, 4, 0),
             child: TMenuButton(),
           ),
           Text(
@@ -145,21 +145,18 @@ class _Header extends StatelessWidget {
                       .add(DeleteDashboard(dashboardId: selectedDashboardId)),
                 ),
               if (isAdmin)
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.add_a_photo,
-                      color: Colors.white,
-                    ),
-                    onPressed: () =>
-                        Navigator.of(context).push(DashboardEditPage.route(
-                      domain: domain,
-                      isAdmin: isAdmin,
-                      initialDashboard: null,
-                      isEdit: true,
-                    )),
+                IconButton(
+                  icon: const Icon(
+                    Icons.add_a_photo,
+                    color: Colors.white,
                   ),
+                  onPressed: () =>
+                      Navigator.of(context).push(DashboardEditPage.route(
+                    domain: domain,
+                    isAdmin: isAdmin,
+                    initialDashboard: null,
+                    isEdit: true,
+                  )),
                 ),
               if (isAdmin && selectedDashboardId != '')
                 Padding(
