@@ -119,8 +119,8 @@ class LoginView extends StatelessWidget {
                     }
                   },
                   title: 'SIGN IN'),
-              const SizedBox(height: 16),
-              const _LinkText(),
+              // const SizedBox(height: 16),
+              // const _LinkText(),
               const SizedBox(height: 128),
             ],
           ),
