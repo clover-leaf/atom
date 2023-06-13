@@ -65,27 +65,31 @@ class TileWidget extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.more_horiz),
-                    onPressed: () => showDialog<bool?>(
-                      context: context,
-                      builder: (bContext) => const TOptionDialog(),
-                    ).then((value) {
-                      if (value != null) {
-                        if (value) {
-                          context
-                              .read<TileBloc>()
-                              .add(DeleteTile(tileId: tile.id));
-                        } else {
-                          Navigator.of(context).push(TileEditPage.route(
-                            domain: domain,
-                            initialTile: tile,
-                            dashboardId: dashboardId,
-                            type: tile.type,
-                            isAdmin: isAdmin,
-                            isEdit: true,
-                          ));
-                        }
+                    onPressed: () {
+                      if (isAdmin) {
+                        showDialog<bool?>(
+                          context: context,
+                          builder: (bContext) => const TOptionDialog(),
+                        ).then((value) {
+                          if (value != null) {
+                            if (value) {
+                              context
+                                  .read<TileBloc>()
+                                  .add(DeleteTile(tileId: tile.id));
+                            } else {
+                              Navigator.of(context).push(TileEditPage.route(
+                                domain: domain,
+                                initialTile: tile,
+                                dashboardId: dashboardId,
+                                type: tile.type,
+                                isAdmin: isAdmin,
+                                isEdit: true,
+                              ));
+                            }
+                          }
+                        });
                       }
-                    }),
+                    },
                   )
                 ],
               ),
